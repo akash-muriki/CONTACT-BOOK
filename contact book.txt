@@ -1,0 +1,61 @@
+names=[]
+contacts=[]
+names_Present=[]
+contacts_present=[]
+file=open("bot","a")
+file.seek(0)
+file.close()
+print("ENTER STOP TO TERMINATE ADDING OF CONTACTS")
+file=open("bot","r")
+for line in file:
+    names_contacts_presesnt=line.split()
+    names_Present.append(names_contacts_presesnt[0])
+    contacts_present.append(names_contacts_presesnt[1:])
+dict2=dict(zip(names_Present,contacts_present))
+file.close()
+file=open("bot","w")
+while True:
+    n=input("Enter Name:").upper()
+    names.append(n)
+    if n=="STOP":
+        break
+    c=(input("Enter Contacts Seperated By Space:").upper()).split()
+    contacts.append(c)
+dict1=dict(zip(names,contacts))
+dict2.update(dict1)
+for i in sorted(dict2.keys()):
+    file.write("{0:10}".format(i))
+    for j in dict2[i]:
+        file.write(j)
+        file.write(" ")
+    file.write("\n")
+file.close()
+search=int(input("NUMBER OF SEARCHES:"))
+for i in range(search):
+    user_search=input("ENTER NAME OR CONTACT:").upper()
+    flag=0
+    try:
+        if user_search.isalpha():
+            for i,j in dict2.items():
+                if i==user_search:
+                    print("CONTACT OF PERSON IS:",*dict2[i])
+                    flag=1
+            if flag==0:
+                print("**ENTERED VALUE IS NOT PRESENT IN CONTACT BOOK**")
+        else:
+            for i,j in dict2.items():
+                for k in j:
+                    if k==user_search:
+                      print("NAME OF PERSON IS", i)
+                      flag=1
+            if flag==0:
+                print("**ENTERED VALUE IS NOT PRESENT IN CONTACT BOOK**")
+    except ValueError:
+        print("**ENTERED VALUE IS NOT PRESENT IN CONTACT BOOK**")
+
+
+
+
+
+
+
